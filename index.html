@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Antigravity | 협동로봇 전문 브랜드</title>
+    <meta name="description" content="작업자와 공존하는 스마트한 선택, 앤티그래비티 협동로봇. 산업 현장의 안전과 효율을 책임집니다.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header id="main-header">
+        <div class="container nav-content">
+            <!-- Logo removed -->
+            <nav class="main-nav">
+                <ul class="nav-links">
+                    <li><a href="#" data-route="home">홈</a></li>
+                    <li class="has-dropdown"><a href="#" data-route="products">제품 소개</a></li>
+                    <li class="has-dropdown"><a href="#" data-route="applications">적용 사례</a></li>
+                    <li class="has-dropdown"><a href="#" data-route="support">고객 지원</a></li>
+                    <li class="has-dropdown"><a href="#" data-route="news">커뮤니티</a></li>
+                </ul>
+                <!-- Mega Menu Panel -->
+                <div class="mega-menu">
+                    <div class="container mega-grid">
+                        <div class="mega-col">
+                            <h4>제품 라인업</h4>
+                            <ul>
+                                <li><a href="#" data-route="products">협동로봇 A-Series</a></li>
+                                <li><a href="#" data-route="products">모바일 로봇 M-Series</a></li>
+                                <li><a href="#" data-route="products">이동형 양팔로봇</a></li>
+                                <li><a href="#" data-route="products">사족보행 로봇</a></li>
+                                <li><a href="#" data-route="products">천문 마운트</a></li>
+                            </ul>
+                        </div>
+                        <div class="mega-col">
+                            <h4>기술 지원</h4>
+                            <ul>
+                                <li><a href="#" data-route="support">자료실 (CAD/Manual)</a></li>
+                                <li><a href="#" data-route="support">소프트웨어 업데이트</a></li>
+                                <li><a href="#" data-route="support">기술 FAQ</a></li>
+                                <li><a href="#" data-route="support">웨비나 일정</a></li>
+                            </ul>
+                        </div>
+                        <div class="mega-col">
+                            <h4>적용 사례</h4>
+                            <ul>
+                                <li><a href="#" data-route="applications">제조 및 조립</a></li>
+                                <li><a href="#" data-route="applications">물류 및 팔레타이징</a></li>
+                                <li><a href="#" data-route="applications">F&B 푸드테크</a></li>
+                                <li><a href="#" data-route="applications">대리점 찾기</a></li>
+                            </ul>
+                        </div>
+                        <div class="mega-col">
+                            <h4>회사 정보</h4>
+                            <ul>
+                                <li><a href="#" data-route="home">브랜드 비전</a></li>
+                                <li><a href="#" data-route="news">공지사항 및 뉴스</a></li>
+                                <li><a href="#" data-route="contact">채용 공고</a></li>
+                                <li><a href="#" data-route="contact">오시는 길</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            <div class="header-actions">
+                <a href="#" class="btn-primary" style="padding: 0.6rem 1.2rem; font-size: 0.85rem;" data-route="contact">도입 문의</a>
+            </div>
+        </div>
+    </header>
+
+    <main id="app-content">
+        <!-- Content will be injected here by main.js -->
+    </main>
+
+    <footer id="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <!-- Footer logo removed -->
+                    <p>앤티그래비티는 혁신적인 로봇 기술을 통해 <br>인간과 기계의 완벽한 협업 환경을 창조합니다.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#" data-route="products">제품 소개</a></li>
+                        <li><a href="#" data-route="applications">적용 사례</a></li>
+                        <li><a href="#" data-route="support">고객 지원</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Contact Us</h4>
+                    <ul>
+                        <li>Email: info@antigravity.robot</li>
+                        <li>Tel: 02-1234-5678</li>
+                        <li>Address: 서울특별시 금천구 가산로...</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Antigravity Inc. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <!-- Firebase SDKs & Configuration -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyDnN9JMJApUMr89tiUpnV4s9TCkkYpH7CE",
+            authDomain: "xxxx-55c33.firebaseapp.com",
+            projectId: "xxxx-55c33",
+            storageBucket: "xxxx-55c33.firebasestorage.app",
+            messagingSenderId: "98395998200",
+            appId: "1:98395998200:web:eac68486e44a4de4e4380d",
+            measurementId: "G-JLKGBFTZP9"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        // Make firestore available globally
+        window.db = firebase.firestore();
+        console.log("Firebase initialized successfully.");
+    </script>
+
+    <script src="main.js"></script>
+</body>
+</html>
