@@ -17,15 +17,20 @@
             <!-- Logo removed -->
             <nav class="main-nav" aria-label="메인 네비게이션">
                 <ul class="nav-links">
-                    <li><a href="#" data-route="home">홈</a></li>
-                    <li><a href="#" data-route="about">학과 및 소개</a></li>
-                    <li><a href="#" data-route="portfolio">포트폴리오</a></li>
-                    <li><a href="#" data-route="products">제품 라인업</a></li>
-                    <li><a href="#" data-route="news">게시판</a></li>
+                    <li><a href="#" data-route="home" data-ko="홈" data-en="Home">홈</a></li>
+                    <li><a href="#" data-route="about" data-ko="학과 및 소개" data-en="About Dept">학과 및 소개</a></li>
+                    <li><a href="#" data-route="portfolio" data-ko="포트폴리오" data-en="Portfolio">포트폴리오</a></li>
+                    <li><a href="#" data-route="products" data-ko="제품 라인업" data-en="Products">제품 라인업</a></li>
+                    <li><a href="#" data-route="applications" data-ko="사용처" data-en="Applications">사용처</a></li>
+                    <li><a href="#" data-route="news" data-ko="커뮤니티" data-en="Community">커뮤니티</a></li>
                 </ul>
             </nav>
-            <div class="header-actions">
-                <a href="#" class="btn-primary" style="padding: 0.6rem 1.2rem; font-size: 0.85rem;" data-route="portfolio" aria-label="포트폴리오 보기">프로젝트 보기</a>
+            <div class="header-actions" style="display: flex; align-items: center; gap: 1rem;">
+                <div class="lang-switch" style="color: #fff; font-size: 0.9rem; font-weight: bold; cursor: pointer; user-select: none;">
+                    <span id="btn-ko" onclick="window.setLanguage('ko')" style="color: var(--primary);">KO</span> | 
+                    <span id="btn-en" onclick="window.setLanguage('en')" style="opacity: 0.5;">EN</span>
+                </div>
+                <a href="#" class="btn-primary" style="padding: 0.6rem 1.2rem; font-size: 0.85rem;" data-route="portfolio" aria-label="포트폴리오 보기" data-ko="프로젝트 보기" data-en="View Project">프로젝트 보기</a>
             </div>
         </div>
     </header>
@@ -39,22 +44,22 @@
             <div class="footer-content">
                 <div class="footer-brand">
                     <!-- Footer logo removed -->
-                    <p>앤티그래비티는 혁신적인 로봇 기술을 통해 <br>인간과 기계의 완벽한 협업 환경을 창조합니다.</p>
+                    <p data-ko="앤티그래비티는 혁신적인 로봇 기술을 통해 <br>인간과 기계의 완벽한 협업 환경을 창조합니다." data-en="Antigravity creates a perfect collaborative environment<br>between humans and machines through robotic innovation.">앤티그래비티는 혁신적인 로봇 기술을 통해 <br>인간과 기계의 완벽한 협업 환경을 창조합니다.</p>
                 </div>
                 <div class="footer-links">
                     <h4>Quick Links</h4>
                     <ul>
-                        <li><a href="#" data-route="about">학과 소개</a></li>
-                        <li><a href="#" data-route="portfolio">포트폴리오</a></li>
-                        <li><a href="#" data-route="news">공지사항</a></li>
+                        <li><a href="#" data-route="about" data-ko="학과 소개" data-en="About Us">학과 소개</a></li>
+                        <li><a href="#" data-route="portfolio" data-ko="포트폴리오" data-en="Portfolio">포트폴리오</a></li>
+                        <li><a href="#" data-route="news" data-ko="공지사항" data-en="Notices">공지사항</a></li>
                     </ul>
                 </div>
                 <div class="footer-links">
                     <h4>Contact Us</h4>
                     <ul>
                         <li>Email: info@antigravity.robot</li>
-                        <li>Tel: 02-1234-5678</li>
-                        <li>Address: 서울특별시 금천구 가산로...</li>
+                        <li>Tel: +82 2-1234-5678</li>
+                        <li data-ko="Address: 서울특별시 금천구 가산로..." data-en="Address: Gasan-ro, Geumcheon-gu, Seoul...">Address: 서울특별시 금천구 가산로...</li>
                     </ul>
                 </div>
             </div>

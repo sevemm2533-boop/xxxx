@@ -1,4 +1,5 @@
 // Page Templates
+window.currentLanguage = 'ko';
 const templates = {
     home: `
         <section class="hero cinematic">
@@ -235,7 +236,7 @@ const templates = {
     news: `
         <section class="container reveal" style="padding-top: 10rem;">
             <div class="section-title">
-                <h2>고객 소통 게시판</h2>
+                <h2>커뮤니티</h2>
                 <p>궁금한 점이나 도입 사례를 공유해 주세요.</p>
                 <div class="divider"></div>
             </div>
@@ -364,26 +365,7 @@ function navigate(route, params = null) {
             window.db.collection("posts").doc(params).get().then((doc) => {
                 if (doc.exists) {
                     const data = doc.data();
-                    appContent.innerHTML = `
-                        <section class="container reveal" style="padding-top: 10rem;">
-                            <div class="board-container">
-                                <div style="display: flex; justify-content: space-between; margin-bottom: 2rem;">
-                                    <a href="#" data-route="news" style="color: var(--primary); text-decoration: none;">← 목록으로 돌아가기</a>
-                                    <div style="display: flex; gap: 0.5rem;">
-                                        <button onclick="window.editPost('${doc.id}')" style="background: none; border: 1px solid #444; color: #fff; padding: 0.3rem 0.8rem; cursor: pointer; border-radius: 4px;">수정</button>
-                                        <button onclick="window.deletePost('${doc.id}')" style="background: none; border: 1px solid #ff4d4d; color: #ff4d4d; padding: 0.3rem 0.8rem; cursor: pointer; border-radius: 4px;">삭제</button>
-                                    </div>
-                                </div>
-                                <h2 style="margin-bottom: 1rem; color: var(--primary);">${data.title}</h2>
-                                <div style="color: var(--text-muted); margin-bottom: 2rem; border-bottom: 1px solid #333; padding-bottom: 1rem;">
-                                    <span>작성자: ${data.author}</span> | <span>날짜: ${data.date || data.Date || '-'}</span>
-                                </div>
-                                <div style="line-height: 1.8; font-size: 1.1rem; min-height: 300px; color: #ccc;">
-                                    ${(data.content || '').replace(/\n/g, '<br>')}
-                                </div>
-                            </div>
-                        </section>
-                    `;
+                    appContent.innerHTML = (window.currentLanguage === 'en' ? templates_en : templates).news_detail(doc.id, data);
                     setTimeout(initScrollReveal, 100);
                 }
             }).catch(err => {
@@ -392,7 +374,8 @@ function navigate(route, params = null) {
             });
         }
     } else {
-        appContent.innerHTML = templates[route] || templates.home;
+        const activeTemplates = window.currentLanguage === 'en' ? templates_en : templates;
+        appContent.innerHTML = activeTemplates[route] || activeTemplates.home;
     }
 
     if (route === 'news') {
@@ -633,3 +616,347 @@ if (document.readyState === 'loading') {
 } else {
     init();
 }
+
+window.setLanguage = function(lang) {
+    if (window.currentLanguage === lang) return;
+    window.currentLanguage = lang;
+    
+    // Update language selection buttons opacity/color
+    document.getElementById('btn-ko').style.opacity = lang === 'ko' ? '1' : '0.5';
+    document.getElementById('btn-en').style.opacity = lang === 'en' ? '1' : '0.5';
+    document.getElementById('btn-ko').style.color = lang === 'ko' ? 'var(--primary)' : '#fff';
+    document.getElementById('btn-en').style.color = lang === 'en' ? 'var(--primary)' : '#fff';
+
+    // Update static HTML tags defined with data-ko/data-en
+    document.querySelectorAll('[data-ko][data-en]').forEach(el => {
+        el.innerHTML = el.getAttribute('data-' + lang);
+    });
+
+    // Re-render current route to fetch English/Korean templates
+    const activeLink = document.querySelector('nav a.active');
+    let currentRoute = 'home';
+    if(activeLink) currentRoute = activeLink.getAttribute('data-route') || 'home';
+    
+    // Check if in news detail view
+    const editBtn = document.querySelector('button[onclick*="editPost"]');
+    if (editBtn) {
+        const match = editBtn.getAttribute('onclick').match(/'([^']+)'/);
+        if (match) {
+            navigate('news_detail', match[1]);
+            return;
+        }
+    }
+    
+    navigate(currentRoute);
+};
+
+// Translate function for news detail
+templates.news_detail = (id, data) => `
+    <section class="container reveal" style="padding-top: 10rem;">
+        <div class="board-container">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 2rem;">
+                <a href="#" data-route="news" style="color: var(--primary); text-decoration: none;">← 목록으로 돌아가기</a>
+                <div style="display: flex; gap: 0.5rem;">
+                    <button onclick="window.editPost('${id}')" style="background: none; border: 1px solid #444; color: #fff; padding: 0.3rem 0.8rem; cursor: pointer; border-radius: 4px;">수정</button>
+                    <button onclick="window.deletePost('${id}')" style="background: none; border: 1px solid #ff4d4d; color: #ff4d4d; padding: 0.3rem 0.8rem; cursor: pointer; border-radius: 4px;">삭제</button>
+                </div>
+            </div>
+            <h2 style="margin-bottom: 1rem; color: var(--primary);">${data.title}</h2>
+            <div style="color: var(--text-muted); margin-bottom: 2rem; border-bottom: 1px solid #333; padding-bottom: 1rem;">
+                <span>작성자: ${data.author}</span> | <span>날짜: ${data.date || data.Date || '-'}</span>
+            </div>
+            <div style="line-height: 1.8; font-size: 1.1rem; min-height: 300px; color: #ccc;">
+                ${(data.content || '').replace(/\n/g, '<br>')}
+            </div>
+        </div>
+    </section>
+`;
+
+// Insert English dictionary
+const templates_en = {
+    home: `
+        <section class="hero cinematic">
+            <div id="video-container">
+                <video autoplay muted playsinline class="hero-bg-video active" id="bg-video-1">
+                    <source src="https://assets.mixkit.co/videos/47257/47257-720.mp4" type="video/mp4">
+                </video>
+                <video muted playsinline class="hero-bg-video" id="bg-video-2"></video>
+            </div>
+            <div class="hero-overlay"></div>
+            <div class="container hero-center-content">
+                <p class="hero-top-text">Safety & Efficiency for Industry 4.0</p>
+                <h1 class="hero-main-title">Robot Software<br>Project Portfolio</h1>
+                <p class="hero-sub-text">A smart choice coexisting with workers. Antigravity project combining web programming and robotics.</p>
+                <div class="hero-btns">
+                    <a href="#" class="btn-primary" data-route="portfolio" aria-label="View Portfolio">View Portfolio</a>
+                </div>
+            </div>
+        </section>
+        <section class="container reveal">
+            <div class="section-title">
+                <h2>Core Portfolio</h2>
+                <div class="divider"></div>
+            </div>
+            <div class="grid">
+                <div class="card" data-route="portfolio" tabindex="0">
+                    <div class="card-img"><img src="assets/robot_a10.png" loading="lazy" alt="A-Series Control"></div>
+                    <div class="card-body">
+                        <h3>A-Series Web UI Implementation</h3>
+                        <p>Designed a web-based intuitive control interface for general-purpose collaborative robots used in assembly lines.</p>
+                    </div>
+                </div>
+                <div class="card" data-route="portfolio" tabindex="0">
+                    <div class="card-img"><img src="assets/robot_a10.png" loading="lazy" alt="P-Series Precision" style="filter: hue-rotate(45deg);"></div>
+                    <div class="card-body">
+                        <h3>P-Series Precision Control</h3>
+                        <p>Improved vision sensor logic to achieve ±0.02mm repeatability for high-precision tasks.</p>
+                    </div>
+                </div>
+                <div class="card" data-route="portfolio" tabindex="0">
+                    <div class="card-img"><img src="assets/robot_a10.png" loading="lazy" alt="H-Series Payload" style="filter: brightness(0.8);"></div>
+                    <div class="card-body">
+                        <h3>H-Series Payload Optimization</h3>
+                        <p>Dynamic safe speed adjustment algorithm supporting up to 20kg heavy payloads.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="container reveal" style="padding-top: 4rem; padding-bottom: 4rem; border-top: 1px solid #222;">
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <p style="color: var(--text-muted); font-weight: 600; letter-spacing: 1px; font-size: 0.8rem;">TRUSTED BY GLOBAL PARTNERS</p>
+            </div>
+            <div style="display: flex; justify-content: space-around; align-items: center; filter: grayscale(1); opacity: 0.5;">
+                <h3 style="font-style: italic; color: #999;">SAMSUNG</h3>
+                <h3 style="font-style: italic; color: #999;">HYUNDAI</h3>
+                <h3 style="font-style: italic; color: #999;">LG ELECTRONICS</h3>
+                <h3 style="font-style: italic; color: #999;">POSCO</h3>
+            </div>
+        </section>
+        <section class="stats container">
+            <div class="stat-item">
+                <h4 class="counter" data-target="1500">0</h4>
+                <p>Client Companies</p>
+            </div>
+            <div class="stat-item">
+                <h4 class="counter" data-target="24">0</h4>
+                <p>Global Certifications</p>
+            </div>
+            <div class="stat-item">
+                <h4 class="counter" data-target="500000">0</h4>
+                <p>Operation Hours (h)</p>
+            </div>
+        </section>
+    `,
+    products: `
+        <section class="container" style="padding-top: 10rem;">
+            <div class="section-title">
+                <h2>A-Series Specifications</h2>
+                <div class="divider"></div>
+            </div>
+            <div class="sticky-container">
+                <div class="sticky-img">
+                    <img src="assets/robot_a10.png" alt="Robot A10">
+                </div>
+                <div class="scroll-content">
+                    <div style="margin-bottom: 4rem;">
+                        <h3 style="font-size: 2rem; margin-bottom: 1rem;">Antigravity A-10</h3>
+                        <p style="color: var(--text-muted); font-size: 1.1rem;">
+                            The A-10 is our most popular model, offering a 10kg payload and a 1300mm reach. Built-in collision detection guarantees safe coexistence with operators.
+                        </p>
+                    </div>
+                    <table class="board-table" style="margin-bottom: 4rem;">
+                        <thead><tr><th>Specification</th><th>Details</th></tr></thead>
+                        <tbody>
+                            <tr><td>Payload</td><td>10 kg</td></tr>
+                            <tr><td>Reach</td><td>1300 mm</td></tr>
+                            <tr><td>Repeatability</td><td>±0.03 mm</td></tr>
+                            <tr><td>DOF</td><td>6 Axis</td></tr>
+                            <tr><td>Weight</td><td>33.5 kg</td></tr>
+                        </tbody>
+                    </table>
+                    <div style="margin-bottom: 4rem;">
+                        <h4 style="margin-bottom: 1rem;">Key Features</h4>
+                        <ul style="padding-left: 1.5rem; color: var(--text-muted);">
+                            <li>Intelligent collision detection & safe stop</li>
+                            <li>Intuitive GUI teaching pendant</li>
+                            <li>IP54 rating (industrial option IP66)</li>
+                            <li>Fast installation & relocation</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    `,
+    applications: `
+        <section class="container reveal" style="padding-top: 10rem;">
+            <div class="section-title">
+                <h2>Industrial Applications</h2>
+                <div class="divider"></div>
+            </div>
+            <div class="grid">
+                <div class="card">
+                    <div class="card-img"><img src="assets/car_factory_robot.png" alt="Car Factory Robot"></div>
+                    <div class="card-body">
+                        <h3>Car Manufacturing</h3>
+                        <p>Collaborative robots used in assembly and welding processes in car factories. Boasts high precision and durability.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-img"><img src="assets/assembly_working.jpg" alt="Assembly"></div>
+                    <div class="card-body">
+                        <h3>Assembly & Inspection</h3>
+                        <p>Simultaneously performs precise part assembly and defect inspection combined with vision sensors.</p>
+                    </div>
+                </div>
+                <div class="card" tabindex="0">
+                    <div class="card-img"><img src="assets/food_working.jpg" loading="lazy" alt="F&B Robot in Action"></div>
+                    <div class="card-body">
+                        <h3>F&B Automation</h3>
+                        <p>Integrated POS system and ROS for uncrewed coffee extraction and chicken cooking processes.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    `,
+    about: `
+        <section class="container reveal" style="padding-top: 10rem;">
+            <div class="section-title">
+                <h2>About Robot Software Dept</h2>
+                <p>Practical convergence education in HW and SW</p>
+                <div class="divider"></div>
+            </div>
+            <div style="max-width: 800px; margin: 0 auto; line-height: 1.8; color: #ddd;">
+                <p style="margin-bottom: 2rem;">The Robot Software Department focuses on combining robotics and software engineering, the core of the 4th Industrial Revolution. Students master everything from collaborative robot programming to system control and web-based UI/UX design through practical training.</p>
+                <h3 style="color: var(--primary); margin-bottom: 1rem;">Core Competencies</h3>
+                <ul style="list-style-position: inside; margin-bottom: 2rem;">
+                    <li>Robot Dynamics & ROS-based Programming</li>
+                    <li>Remote Monitoring Implementation (Firebase, REST API)</li>
+                    <li>Data Visualization & UI/UX Design</li>
+                </ul>
+            </div>
+        </section>
+    `,
+    portfolio: `
+        <section class="container reveal" style="padding-top: 10rem;">
+            <div class="section-title">
+                <h2>Portfolio Details</h2>
+                <p>Key outputs and problem-solving processes during the course.</p>
+                <div class="divider"></div>
+            </div>
+            <div class="board-container" style="max-width: 900px; margin: 0 auto;">
+                <article style="margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid #333;">
+                    <h3 style="color: var(--primary); font-size: 1.5rem; margin-bottom: 1rem;">1. Cobot Web Control Dashboard</h3>
+                    <p style="color: #ccc; margin-bottom: 1rem;">Overview: Developed a responsive web dashboard from scratch to monitor status (temp, power, hours) of distributed cobots.</p>
+                    <p style="color: #ccc;">Outcome: High completion rate using Firebase real-time data sync and mobile-first layouts.</p>
+                </article>
+                <article>
+                    <h3 style="color: var(--primary); font-size: 1.5rem; margin-bottom: 1rem;">2. Vision Sensor Defect Detection</h3>
+                    <p style="color: #ccc; margin-bottom: 1rem;">Overview: Built a system that receives defect images from camera servers during assembly and displays alerts seamlessly in the browser.</p>
+                    <p style="color: #ccc;">Outcome: Achieved faster loading times via Image Lazy Loading and rendering optimizations.</p>
+                </article>
+            </div>
+        </section>
+    `,
+    news: `
+        <section class="container reveal" style="padding-top: 10rem;">
+            <div class="section-title">
+                <h2>Community Board</h2>
+                <p>Share your questions and use cases.</p>
+                <div class="divider"></div>
+            </div>
+            <div class="board-container">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+                    <h3>Recent Posts</h3>
+                    <button class="btn-primary" style="padding: 0.5rem 1rem;" data-route="news_write">Write</button>
+                </div>
+                <table class="board-table">
+                    <thead>
+                        <tr><th>No.</th><th>Title</th><th>Author</th><th>Date</th></tr>
+                    </thead>
+                    <tbody id="board-list">
+                        <tr><td colspan="4" style="text-align:center; padding: 2rem;">Connecting to database...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    `,
+    news_write: `
+        <section class="container reveal" style="padding-top: 10rem;">
+            <div class="section-title">
+                <h2>Write a new post</h2>
+                <div class="divider"></div>
+            </div>
+            <div class="board-container" style="max-width: 800px; margin: 0 auto;">
+                <form id="post-form">
+                    <div style="margin-bottom: 1.5rem;">
+                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Title</label>
+                        <input type="text" id="post-title" required placeholder="Enter title" style="width: 100%; padding: 0.8rem; background: #222; border: 1px solid #444; color: #fff; border-radius: 5px;">
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
+                        <div>
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Author</label>
+                            <input type="text" id="post-author" required placeholder="Name or Company" style="width: 100%; padding: 0.8rem; background: #222; border: 1px solid #444; color: #fff; border-radius: 5px;">
+                        </div>
+                        <div>
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Password (for edit)</label>
+                            <input type="password" id="post-password" required placeholder="4 digits" style="width: 100%; padding: 0.8rem; background: #222; border: 1px solid #444; color: #fff; border-radius: 5px;">
+                        </div>
+                    </div>
+                    <div style="margin-bottom: 1.5rem;">
+                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Content</label>
+                        <textarea id="post-content" required placeholder="Content" style="width: 100%; padding: 0.8rem; background: #222; border: 1px solid #444; color: #fff; border-radius: 5px; height: 300px;"></textarea>
+                    </div>
+                    <div style="display: flex; gap: 1rem;">
+                        <button type="submit" class="btn-primary" style="flex: 1;">Submit</button>
+                        <button type="button" class="btn-primary" style="flex: 1; background: #444;" data-route="news">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    `,
+    news_edit: `
+        <section class="container reveal" style="padding-top: 10rem;">
+            <div class="section-title">
+                <h2>Edit Post</h2>
+                <div class="divider"></div>
+            </div>
+            <div class="board-container" style="max-width: 800px; margin: 0 auto;">
+                <form id="edit-form">
+                    <input type="hidden" id="edit-id">
+                    <div style="margin-bottom: 1.5rem;">
+                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Title</label>
+                        <input type="text" id="edit-title" required style="width: 100%; padding: 0.8rem; background: #222; border: 1px solid #444; color: #fff; border-radius: 5px;">
+                    </div>
+                    <div style="margin-bottom: 1.5rem;">
+                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Content</label>
+                        <textarea id="edit-content" required style="width: 100%; padding: 0.8rem; background: #222; border: 1px solid #444; color: #fff; border-radius: 5px; height: 300px;"></textarea>
+                    </div>
+                    <div style="display: flex; gap: 1rem;">
+                        <button type="submit" class="btn-primary" style="flex: 1;">Finish Edit</button>
+                        <button type="button" class="btn-primary" style="flex: 1; background: #444;" data-route="news">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    `,
+    news_detail: (id, data) => `
+        <section class="container reveal" style="padding-top: 10rem;">
+            <div class="board-container">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 2rem;">
+                    <a href="#" data-route="news" style="color: var(--primary); text-decoration: none;">← Back to list</a>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <button onclick="window.editPost('${id}')" style="background: none; border: 1px solid #444; color: #fff; padding: 0.3rem 0.8rem; cursor: pointer; border-radius: 4px;">Edit</button>
+                        <button onclick="window.deletePost('${id}')" style="background: none; border: 1px solid #ff4d4d; color: #ff4d4d; padding: 0.3rem 0.8rem; cursor: pointer; border-radius: 4px;">Delete</button>
+                    </div>
+                </div>
+                <h2 style="margin-bottom: 1rem; color: var(--primary);">${data.title}</h2>
+                <div style="color: var(--text-muted); margin-bottom: 2rem; border-bottom: 1px solid #333; padding-bottom: 1rem;">
+                    <span>Author: ${data.author}</span> | <span>Date: ${data.date || data.Date || '-'}</span>
+                </div>
+                <div style="line-height: 1.8; font-size: 1.1rem; min-height: 300px; color: #ccc;">
+                    ${(data.content || '').replace(/\n/g, '<br>')}
+                </div>
+            </div>
+        </section>
+    `
+};

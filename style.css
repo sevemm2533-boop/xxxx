@@ -21,6 +21,9 @@
 
 html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    max-width: 100%;
 }
 
 body {
@@ -30,6 +33,7 @@ body {
     line-height: 1.7;
     font-size: 1.05rem;
     overflow-x: hidden;
+    width: 100%;
 }
 
 /* --- Layout --- */
@@ -589,6 +593,7 @@ input:focus, select:focus, textarea:focus {
     .nav-links { flex-wrap: wrap; justify-content: center; gap: 1rem; }
     
     section { padding: 4rem 0; }
+    section[style*="padding-top"] { padding-top: 6rem !important; }
     .section-title h2 { font-size: 1.8rem; }
     
     .grid { grid-template-columns: 1fr !important; }
@@ -598,11 +603,15 @@ input:focus, select:focus, textarea:focus {
     .stats { flex-direction: column; gap: 3rem; padding: 3rem 0; }
     
     .sticky-container { flex-direction: column; gap: 2rem; }
-    .sticky-img { position: static; top: auto; }
+    .sticky-img { position: static; top: auto; width: 100%; }
+    .sticky-img img { width: 100%; height: auto; }
     
     .footer-content { grid-template-columns: 1fr; gap: 2rem; }
     
-    table.board-table { display: block; overflow-x: auto; white-space: nowrap; }
+    .container { padding: 0 1rem; }
+    
+    table.board-table { display: table; width: 100%; white-space: normal; word-break: break-all; table-layout: fixed; }
+    .board-table th, .board-table td { font-size: 0.85rem; padding: 0.6rem 0.2rem; word-break: break-word; }
     
     div[style*="justify-content: space-around"] { flex-wrap: wrap; gap: 1.5rem; }
 }
