@@ -1,48 +1,49 @@
 // Page Templates
 const templates = {
     home: `
-        <section class="hero">
-            <div class="container hero-split">
-                <div class="hero-text-content">
-                    <p class="hero-top-text">Safety & Efficiency for Industry 4.0</p>
-                    <h1 class="hero-main-title">작업자와 공존하는<br>스마트한 선택</h1>
-                    <p class="hero-sub-text">앤티그래비티의 협동로봇은 인간과 기계의 완벽한 협업 환경을 창조하여 제조 현장의 미래를 제시합니다.</p>
-                    <div class="hero-btns">
-                        <a href="#" class="btn-primary" data-route="products">제품 라인업 보기</a>
-                    </div>
-                </div>
-                <div class="hero-visual-content">
-                    <img src="assets/hero.png" alt="Antigravity Robot" class="hero-robot-img">
+        <section class="hero cinematic">
+            <div id="video-container">
+                <video autoplay muted playsinline class="hero-bg-video active" id="bg-video-1">
+                    <source src="https://assets.mixkit.co/videos/47257/47257-720.mp4" type="video/mp4">
+                </video>
+                <video muted playsinline class="hero-bg-video" id="bg-video-2"></video>
+            </div>
+            <div class="hero-overlay"></div>
+            <div class="container hero-center-content">
+                <p class="hero-top-text">Safety & Efficiency for Industry 4.0</p>
+                <h1 class="hero-main-title">로봇소프트웨어과<br>프로젝트 포트폴리오</h1>
+                <p class="hero-sub-text">작업자와 공존하는 스마트한 선택. 웹 프로그래밍과 로봇 제어 기술을 융합한 앤티그래비티 프로젝트입니다.</p>
+                <div class="hero-btns">
+                    <a href="#" class="btn-primary" data-route="portfolio" aria-label="포트폴리오 자세히 보기">포트폴리오 보기</a>
                 </div>
             </div>
-            <div class="hero-glow"></div>
         </section>
 
         <section class="container reveal">
             <div class="section-title">
-                <h2>Product Line-up</h2>
+                <h2>핵심 포트폴리오</h2>
                 <div class="divider"></div>
             </div>
             <div class="grid">
-                <div class="card" data-route="products">
-                    <div class="card-img"><img src="assets/robot_a10.png" alt="A-Series"></div>
+                <div class="card" data-route="portfolio" tabindex="0">
+                    <div class="card-img"><img src="assets/robot_a10.png" loading="lazy" alt="A-Series 로봇 제어 이미지"></div>
                     <div class="card-body">
-                        <h3>A-Series (All-rounder)</h3>
-                        <p>가장 범용적인 협동로봇 라인업. 조립, 검사, 포장 등 다양한 공정에 최적화되어 있습니다.</p>
+                        <h3>A-Series 웹 제어 UI 구현</h3>
+                        <p>조립, 검사 공정을 위한 범용 협동로봇의 웹 기반 직관적 제어 인터페이스 설계 및 구현 성과.</p>
                     </div>
                 </div>
-                <div class="card" data-route="products">
-                    <div class="card-img"><img src="assets/robot_a10.png" alt="P-Series" style="filter: hue-rotate(45deg);"></div>
+                <div class="card" data-route="portfolio" tabindex="0">
+                    <div class="card-img"><img src="assets/robot_a10.png" loading="lazy" alt="P-Series 로봇 제어 이미지" style="filter: hue-rotate(45deg);"></div>
                     <div class="card-body">
-                        <h3>P-Series (Precision)</h3>
-                        <p>고정밀 작업을 위한 라인업. ±0.02mm의 반복 정밀도로 미세 공정을 지원합니다.</p>
+                        <h3>P-Series 정밀 위치 보정</h3>
+                        <p>고정밀 작업을 위한 ±0.02mm 반복 정밀도 달성을 위한 비전 센서 연동 로직 개선 사례.</p>
                     </div>
                 </div>
-                <div class="card" data-route="products">
-                    <div class="card-img"><img src="assets/robot_a10.png" alt="H-Series" style="filter: brightness(0.8);"></div>
+                <div class="card" data-route="portfolio" tabindex="0">
+                    <div class="card-img"><img src="assets/robot_a10.png" loading="lazy" alt="H-Series 로봇 제어 이미지" style="filter: brightness(0.8);"></div>
                     <div class="card-body">
-                        <h3>H-Series (High-payload)</h3>
-                        <p>최대 20kg 하중을 견디는 강력한 라인업. 팔레타이징 및 중량물 취급에 적합합니다.</p>
+                        <h3>H-Series 페이로드 최적화</h3>
+                        <p>최대 20kg 하중 취급 시의 로봇 동역학(Dynamics)을 고려한 안전 속도 자동 조절 알고리즘.</p>
                     </div>
                 </div>
             </div>
@@ -133,26 +134,65 @@ const templates = {
             </div>
             <div class="grid">
                 <div class="card">
-                    <div class="card-img"><img src="assets/welding.png" alt="Welding"></div>
+                    <div class="card-img"><img src="assets/car_factory_robot.png" alt="Car Factory Robot"></div>
                     <div class="card-body">
-                        <h3>용접 (Welding)</h3>
-                        <p>일관된 품질의 고정밀 용접 작업을 수행합니다. 작업자의 근골격계 부담을 줄이고 생산성을 30% 이상 향상시킵니다.</p>
+                        <h3>자동차 제조 (Car Manufacturing)</h3>
+                        <p>자동차 공장에서 조립 및 용접 공정에 투입되는 협동로봇입니다. 높은 정밀도와 내구성을 자랑합니다.</p>
                     </div>
                 </div>
                 <div class="card">
-                    <div class="card-img"><img src="assets/hero.png" alt="Assembly" style="filter: grayscale(1);"></div>
+                    <div class="card-img"><img src="assets/assembly_working.jpg" alt="Assembly"></div>
                     <div class="card-body">
                         <h3>조립 및 검사 (Assembly)</h3>
                         <p>비전 센서와 결합하여 정밀한 부품 조립과 불량품 검사를 동시 수행합니다.</p>
                     </div>
                 </div>
-                <div class="card">
-                    <div class="card-img"><img src="assets/hero.png" alt="F&B" style="filter: sepia(0.5);"></div>
+                <div class="card" tabindex="0">
+                    <div class="card-img"><img src="assets/food_working.jpg" loading="lazy" alt="F&B 로봇 작동 모습"></div>
                     <div class="card-body">
-                        <h3>F&B (푸드테크)</h3>
-                        <p>커피 추출, 치킨 조리 등 푸드 테크 분야에서도 위생적이고 일관된 서비스 로봇으로 활약합니다.</p>
+                        <h3>F&B (푸드테크) 자동화 연동</h3>
+                        <p>커피 추출, 치킨 조리 과정의 무인화를 위한 POS 시스템 및 로봇 운영 체제(ROS) 간 통합 개발.</p>
                     </div>
                 </div>
+            </div>
+        </section>
+    `,
+    about: `
+        <section class="container reveal" style="padding-top: 10rem;">
+            <div class="section-title">
+                <h2>로봇소프트웨어과 소개</h2>
+                <p>하드웨어와 소프트웨어를 아우르는 실용 융합 교육</p>
+                <div class="divider"></div>
+            </div>
+            <div style="max-width: 800px; margin: 0 auto; line-height: 1.8; color: #ddd;">
+                <p style="margin-bottom: 2rem;">로봇소프트웨어과는 미래 4차 산업혁명의 핵심인 로봇공학과 소프트웨어 공학을 융합하여 배우는 전공입니다. 협동로봇의 프로그래밍부터 시스템 제어, 그리고 사용자 친화적인 웹 제어 인터페이스 설계까지 전 과정을 실습을 통해 마스터합니다.</p>
+                <h3 style="color: var(--primary); margin-bottom: 1rem;">핵심 역량</h3>
+                <ul style="list-style-position: inside; margin-bottom: 2rem;">
+                    <li>로봇 동역학 및 ROS 기반 프로그래밍</li>
+                    <li>웹 통신(Firebase, REST API)을 이용한 원격 모니터링 구축</li>
+                    <li>시각적 데이터 시각화 및 UI/UX 설계 기법</li>
+                </ul>
+            </div>
+        </section>
+    `,
+    portfolio: `
+        <section class="container reveal" style="padding-top: 10rem;">
+            <div class="section-title">
+                <h2>프로젝트 & 포트폴리오 상세</h2>
+                <p>본 과정에서 개발한 주요 성과물 및 문제 해결 과정을 소개합니다.</p>
+                <div class="divider"></div>
+            </div>
+            <div class="board-container" style="max-width: 900px; margin: 0 auto;">
+                <article style="margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid #333;">
+                    <h3 style="color: var(--primary); font-size: 1.5rem; margin-bottom: 1rem;">1. 협동로봇 웹 관제 대시보드 구축</h3>
+                    <p style="color: #ccc; margin-bottom: 1rem;">개요: 분산된 협동로봇들의 상태(온도, 전력, 구동 시간)를 실시간으로 모니터링할 수 있는 반응형 웹 대시보드 스크래치 개발.</p>
+                    <p style="color: #ccc;">성과: Firebase를 이용한 실시간 데이터 연동, 768px 미만 디바이스에 대응하는 모바일 퍼스트 레이아웃 적용, 컴포넌트 모듈화 완성도 높임.</p>
+                </article>
+                <article>
+                    <h3 style="color: var(--primary); font-size: 1.5rem; margin-bottom: 1rem;">2. 비전 센서 기반 결함 실시간 판별 </h3>
+                    <p style="color: #ccc; margin-bottom: 1rem;">개요: 제조 조립 공정 중 발생하는 불량품을 카메라 서버로부터 받아 브라우저 상에 지연 없이 표시하고 알람을 주는 기능 구현.</p>
+                    <p style="color: #ccc;">성과: 로딩 시간 단축을 위한 이미지 Lazy Loading 및 렌더링 최적화 팁 적용.</p>
+                </article>
             </div>
         </section>
     `,
@@ -360,7 +400,10 @@ function navigate(route, params = null) {
     }
 
     window.scrollTo(0, 0);
-    if (route === 'home') startCounters();
+    if (route === 'home' || !route) {
+        startCounters();
+        initVideoCycler();
+    }
     setTimeout(initScrollReveal, 100);
 
     document.querySelectorAll('nav a').forEach(link => {
@@ -542,6 +585,47 @@ function init() {
     });
 
     navigate('home');
+    initVideoCycler();
+}
+
+function initVideoCycler() {
+    const videos = [
+        "https://assets.mixkit.co/videos/47257/47257-720.mp4",
+        "https://assets.mixkit.co/videos/47260/47260-720.mp4",
+        "https://assets.mixkit.co/videos/47258/47258-720.mp4",
+        "https://assets.mixkit.co/videos/47266/47266-720.mp4",
+        "https://assets.mixkit.co/videos/2230/2230-720.mp4"
+    ];
+    let currentIdx = 0;
+    const v1 = document.getElementById('bg-video-1');
+    const v2 = document.getElementById('bg-video-2');
+    if (!v1 || !v2) return;
+
+    let activeVideo = v1;
+    let idleVideo = v2;
+    let timer = null;
+
+    const transition = () => {
+        currentIdx = (currentIdx + 1) % videos.length;
+        idleVideo.src = videos[currentIdx];
+        idleVideo.load();
+        
+        idleVideo.oncanplaythrough = () => {
+            idleVideo.play();
+            idleVideo.classList.add('active');
+            activeVideo.classList.remove('active');
+            
+            // Swap references
+            [activeVideo, idleVideo] = [idleVideo, activeVideo];
+            
+            // Schdule next transition in 2 seconds
+            clearTimeout(timer);
+            timer = setTimeout(transition, 2000);
+        };
+    };
+
+    // Initial timer
+    timer = setTimeout(transition, 2000);
 }
 
 if (document.readyState === 'loading') {
